@@ -10,7 +10,7 @@ Anggota:
 Yang perlu disiapkan: 
 
 * Postman: https://www.getpostman.com/apps 
-* webapi 2 client : Download dari visual studio>manage NuGet Packages
+* webapi 2 client : Download dari visual studio>manage NuGet Packages, tinggal cari di kolom search
 
 WebService yang digunakan: openWeather (free)
 
