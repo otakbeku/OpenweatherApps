@@ -11,11 +11,12 @@
             <Label x:Name="label" Content="OpenWeather Webservice App" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Bebas Neue" FontSize="18"/>
         </Grid>
         <Grid HorizontalAlignment="Left" Height="24" Margin="10,41,0,0" VerticalAlignment="Top" Width="497">
-            <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Masukkan nama kota" VerticalAlignment="Top" Width="120" SelectionOpacity="0.2" Opacity="0.5"/>
+            <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" SelectionOpacity="0.2" Opacity="0.5" AutomationProperties.HelpText="Masukkan nama kota"/>
             <Button x:Name="btnSubmitKota" Content="Submit" HorizontalAlignment="Left" Margin="146,0,0,0" VerticalAlignment="Top" Width="75" Click="btnSubmitKota_Click"/>
         </Grid>
         <Grid HorizontalAlignment="Left" Height="230" Margin="10,70,0,0" VerticalAlignment="Top" Width="497">
-            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="230" Width="497"/>
+            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="230" Width="168"/>
+            <Image x:Name="imageWeather" HorizontalAlignment="Left" Height="100" Margin="282,10,0,0" VerticalAlignment="Top" Width="100" Source=""/>
         </Grid>
     </Grid>
 </Window>
