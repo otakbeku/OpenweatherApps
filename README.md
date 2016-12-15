@@ -14,4 +14,4 @@ Yang perlu disiapkan:
 
 WebService yang digunakan: openWeather (free)
 
-untuk APIKEY harus daftar dahulu, nanti tinggal di ganti di var key
+untuk APIKEY harus daftar dahulu(http://openweathermap.org/), nanti tinggal di ganti di var key
