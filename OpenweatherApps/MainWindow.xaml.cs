@@ -159,7 +159,7 @@ namespace OpenweatherApps
 
         async Task getForecast2(string kotaPar)
         {
-            string key = "ec467b7061db8ad1aeeade9178c34a4f";
+            string key = "YOUR KEY";
             string path = "?q=" + kotaPar + "&APPID=" + key;
             try
             {
