@@ -24,16 +24,17 @@ namespace OpenweatherApps
     /// </summary>
     public partial class MainWindow : Window
     {
-        static HttpClient client;
-        static ForecastKota forecast;
+        HttpClient client;
+        ForecastKota forecast;
         string kota;
 
         public MainWindow()
         {
-            forecast = null;
+            //forecast = null;
             client = new HttpClient();
             InitializeComponent();
             //getForecast();
+            getClientHTTP();
 
         }
 
@@ -46,12 +47,12 @@ namespace OpenweatherApps
                 //await getForecast();
                 //setKota();
                 //String isi = await getTextKota();
-       //         string isi = "id " + forecast.id.ToString() + "\n name : " + forecast.name.ToString()
-       //+ "\n cod : " + forecast.cod.ToString() + "\ntemp: " + kelvinToCelcius(forecast.main.temp) + " Celcius";
+                //         string isi = "id " + forecast.id.ToString() + "\n name : " + forecast.name.ToString()
+                //+ "\n cod : " + forecast.cod.ToString() + "\ntemp: " + kelvinToCelcius(forecast.main.temp) + " Celcius";
 
-                string kota = textBox.Text;
-                string dariGet = await Task.Run(()=>getTextKota(kota));
-
+                string kotaget = textBox.Text;
+                string dariGet = await getTextKota2(kotaget);
+                //Task.Run(() => getTextKota(kotaget))
                 //textBlock.Text = isi;
                 textBlock.Text = dariGet;
 
@@ -67,7 +68,7 @@ namespace OpenweatherApps
         {
             await getForecast(kota).ConfigureAwait(false);
             return "id " + forecast.id.ToString() + "\n name : " + forecast.name.ToString()
-       + "\n cod : " + forecast.cod.ToString() + "temp: " + kelvinToCelcius(forecast.main.temp);
+       + "\n cod : " + forecast.cod.ToString() + "\ntemp: " + kelvinToCelcius(forecast.main.temp);
 
         }
 
@@ -101,7 +102,6 @@ namespace OpenweatherApps
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             //string kota = "Malang";
-            setKota();
             /* string kota = await getKota();*/
             string kota = "Malang";
             string key = "ec467b7061db8ad1aeeade9178c34a4f";
@@ -118,10 +118,9 @@ namespace OpenweatherApps
             }
         }
 
-        async void setKota() { kota = textBox.Text; }
-        async Task<string> getKota() { return textBox.Text; }
 
-        static async Task<ForecastKota> getForecasteKotaAsync(String path)
+
+        async Task<ForecastKota> getForecasteKotaAsync(String path)
         {
             ForecastKota forecastKota = null;
             HttpResponseMessage respon = await client.GetAsync(path);
@@ -150,6 +149,36 @@ namespace OpenweatherApps
                 Console.WriteLine(e.Message);
             }
         }
+
+        async Task getClientHTTP()
+        {
+            client.BaseAddress = new Uri("http://api.openweathermap.org/data/2.5/weather");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
+
+        async Task getForecast2(string kotaPar)
+        {
+            string key = "ec467b7061db8ad1aeeade9178c34a4f";
+            string path = "?q=" + kotaPar + "&APPID=" + key;
+            try
+            {
+                //GET
+                forecast = await getForecasteKotaAsync(path).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+        }
+        private async Task<string> getTextKota2(String kota)
+        {
+            await getForecast2(kota).ConfigureAwait(false);
+            return "id " + forecast.id.ToString() + "\n name : " + forecast.name.ToString()
+       + "\n cod : " + forecast.cod.ToString() + "\ntemp: " + kelvinToCelcius(forecast.main.temp);
+
+        }
     }
-    
+
 }
