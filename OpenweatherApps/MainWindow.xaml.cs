@@ -104,7 +104,7 @@ namespace OpenweatherApps
             //string kota = "Malang";
             /* string kota = await getKota();*/
             string kota = "Malang";
-            string key = "ec467b7061db8ad1aeeade9178c34a4f";
+            string key = "{YOUR API KEY}";
             string path = "?q=" + kota + "&APPID=" + key;
 
             try
