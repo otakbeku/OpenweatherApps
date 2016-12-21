@@ -5,18 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OpenweatherApps"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        <Grid HorizontalAlignment="Left" Height="26" Margin="10,10,0,0" VerticalAlignment="Top" Width="497">
-            <Label x:Name="label" Content="OpenWeather Webservice App" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Bebas Neue" FontSize="18"/>
+        Title="OpenWeather Web Service App" Height="370" Width="570
+        " AutomationProperties.IsColumnHeader="False" Background="#FF4B4949" WindowStyle="ThreeDBorderWindow" BorderBrush="Black" ResizeMode="NoResize" BorderThickness="0" Icon="icon.ico">
+    <Grid Height="Auto" VerticalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="21*"/>
+            <ColumnDefinition Width="76*"/>
+            <ColumnDefinition Width="451*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="309" VerticalAlignment="Top" Width="528" Margin="10,10,0,0" Background="White"/>
+
+        <Label x:Name="label" Content="OpenWeather Web Service App" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Bebas Neue" FontSize="30" Margin="23,10,0,0" Height="57" Width="353" Grid.Column="2"/>
+
+        <Grid HorizontalAlignment="Left" Height="24" Margin="1,91,0,0" VerticalAlignment="Top" Width="497" Grid.Column="1" Grid.ColumnSpan="2">
+            <TextBox x:Name="textBoxKota" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" SelectionOpacity="0.2"/>
+            <Button x:Name="btnSubmitKota" Content="Submit" HorizontalAlignment="Left" Margin="133,0,0,0" VerticalAlignment="Top" Width="75" Click="btnSubmitKota_Click"/>
+            <Label x:Name="labelGetAt" Content="" HorizontalAlignment="Left" Height="27" Margin="290,-7,-35,0" VerticalAlignment="Top" Width="242" FontWeight="Bold"/>
         </Grid>
-        <Grid HorizontalAlignment="Left" Height="24" Margin="10,41,0,0" VerticalAlignment="Top" Width="497">
-            <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" SelectionOpacity="0.2" Opacity="0.5" AutomationProperties.HelpText="Masukkan nama kota"/>
-            <Button x:Name="btnSubmitKota" Content="Submit" HorizontalAlignment="Left" Margin="146,0,0,0" VerticalAlignment="Top" Width="75" Click="btnSubmitKota_Click"/>
-        </Grid>
-        <Grid HorizontalAlignment="Left" Height="230" Margin="10,70,0,0" VerticalAlignment="Top" Width="497">
-            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="230" Width="168"/>
-            <Image x:Name="imageWeather" HorizontalAlignment="Left" Height="100" Margin="282,10,0,0" VerticalAlignment="Top" Width="100" Source=""/>
-        </Grid>
+        <Label x:Name="labelCloud" Content="Cloudiness: " HorizontalAlignment="Left" Height="25" Margin="1,123,0,0" VerticalAlignment="Top" Width="74" FontWeight="Bold" Grid.Column="1"/>
+        <Label x:Name="labelPressure" Content="Pressure: " HorizontalAlignment="Left" Height="25" Margin="20,153,0,0" VerticalAlignment="Top" Width="74" FontWeight="Bold" Grid.ColumnSpan="2"/>
+        <Label x:Name="labelHumidity" Content="Humidity: " HorizontalAlignment="Left" Height="25" Margin="20,183,0,0" VerticalAlignment="Top" Width="74" FontWeight="Bold" Grid.ColumnSpan="2"/>
+        <Label x:Name="labelSunrise" Content="Sunrise: " HorizontalAlignment="Left" Height="25" Margin="20,213,0,0" VerticalAlignment="Top" Width="74" FontWeight="Bold" Grid.ColumnSpan="2"/>
+        <Label x:Name="labelCountry" Content="Country: " HorizontalAlignment="Left" Height="25" Margin="20,273,0,0" VerticalAlignment="Top" Width="74" FontWeight="Bold" Grid.ColumnSpan="2"/>
+        <Image x:Name="imageWeather" HorizontalAlignment="Left" Height="84" Margin="192.2,148,0,0" VerticalAlignment="Top" Width="165" Grid.Column="2"/>
+        <Label x:Name="labelSuhu" Content="" HorizontalAlignment="Left" Height="30" Margin="308.2,122,0,0" VerticalAlignment="Top" Width="77" FontSize="18" FontFamily="Coolvetica Rg" Grid.Column="2"/>
+        <Label x:Name="labelSunset" Content="Sunset: " HorizontalAlignment="Left" Height="25" Margin="20,243,0,0" VerticalAlignment="Top" Width="74" FontWeight="Bold" Grid.ColumnSpan="2"/>
+        <Label x:Name="labelCloud2" Content="" HorizontalAlignment="Left" Height="25" Margin="2,123,0,0" VerticalAlignment="Top" Width="183" Grid.Column="2"/>
+        <Label x:Name="labelPressure2" Content="" HorizontalAlignment="Left" Height="25" Margin="2.2,153,0,0" VerticalAlignment="Top" Width="183" Grid.Column="2"/>
+        <Label x:Name="labelHumidity2" Content="" HorizontalAlignment="Left" Height="25" Margin="2.2,183,0,0" VerticalAlignment="Top" Width="183" Grid.Column="2"/>
+        <Label x:Name="labelSunrise2" Content="" HorizontalAlignment="Left" Height="25" Margin="2.2,213,0,0" VerticalAlignment="Top" Width="183" Grid.Column="2"/>
+        <Label x:Name="labelSunset2" Content="" HorizontalAlignment="Left" Height="25" Margin="2.2,243,0,0" VerticalAlignment="Top" Width="183" Grid.Column="2"/>
+        <Label x:Name="labelCountry2" Content="" HorizontalAlignment="Left" Height="25" Margin="2.2,273,0,0" VerticalAlignment="Top" Width="183" Grid.Column="2"/>
     </Grid>
 </Window>

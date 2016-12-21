@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace OpenweatherApps
 {
-    class TempHumid
+    class SysSun
     {
-        public string temp { get; set; }
-        public string pressure { get; set; }
-        public string humidity { get; set; }
+        public string country { get; set; }
+        public string sunrise { get; set; }
+        public string sunset { get; set; }
     }
 }

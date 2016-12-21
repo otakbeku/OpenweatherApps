@@ -28,50 +28,49 @@ namespace OpenweatherApps
         ForecastKota forecast;
         string kota;
 
+
         public MainWindow()
         {
-            //forecast = null;
             client = new HttpClient();
             InitializeComponent();
-            //getForecast();
             getClientHTTP();
 
         }
-
         private async void btnSubmitKota_Click(object sender, RoutedEventArgs e)
         {
 
-            //String isi = await getTextKota();
-            if (textBox.Text != null)
+            if (textBoxKota.Text != null)
             {
-                //await getForecast();
-                //setKota();
-                //String isi = await getTextKota();
-                //         string isi = "id " + forecast.id.ToString() + "\n name : " + forecast.name.ToString()
-                //+ "\n cod : " + forecast.cod.ToString() + "\ntemp: " + kelvinToCelcius(forecast.main.temp) + " Celcius";
+                string kotaget = textBoxKota.Text;
+                //string dariGet = await getTextKota(kotaget);
 
-                string kotaget = textBox.Text;
-                string dariGet = await getTextKota2(kotaget);
-                //Task.Run(() => getTextKota(kotaget))
-                //textBlock.Text = isi;
-                textBlock.Text = dariGet;
+                await getForecast(kotaget);
+                if (forecast != null)
+                {
+                    //Taruh pada Label
+                    labelCloud2.Content = forecast.weather[0].description;
+                    labelPressure2.Content = forecast.main.pressure + " hpa";
+                    labelHumidity2.Content = forecast.main.humidity + "%";
+                    labelSunrise2.Content = FromUnixTime(Convert.ToInt64(forecast.sys.sunrise));
+                    labelSunset2.Content = FromUnixTime(Convert.ToInt64(forecast.sys.sunset));
+                    labelCountry2.Content = forecast.sys.country;
+                    labelSuhu.Content = kelvinToCelcius(forecast.main.temp) + " °C";
 
-                imageWeather.Source = getImage(forecast.weather[0].icon);
+                    labelGetAt.Content = "Get At " + FromUnixTime(Convert.ToInt64(forecast.dt));
+
+                    imageWeather.Source = getImage(forecast.weather[0].icon);
+                }
+                else
+                {
+                    MessageBox.Show("Terjadi kesalahan pada proses berjalannya aplikasi ini.\nPastikan Anda terhubung dengan internet atau kota yang Anda masukkan sudah benar ", "ERROR", MessageBoxButton.OK);
+                }
             }
-            else
-            {
-                textBlock.Text = "Masukkan dahulu nama kota Anda";
-            }
-
         }
-        private async Task<string> getTextKota(String kota)
-        {
-            await getForecast(kota).ConfigureAwait(false);
-            return "id " + forecast.id.ToString() + "\n name : " + forecast.name.ToString()
-       + "\n cod : " + forecast.cod.ToString() + "\ntemp: " + kelvinToCelcius(forecast.main.temp);
-
-        }
-
+        /// <summary>
+        /// Method untuk men-set Image pada imageview berdasarkan gambar yang di per
+        /// </summary>
+        /// <param name="iconPath"></param>
+        /// <returns></returns>
         BitmapImage getImage(string iconPath)
         {
             var image = new Image();
@@ -80,11 +79,17 @@ namespace OpenweatherApps
             BitmapImage bitmap = new BitmapImage();
             bitmap.BeginInit();
             bitmap.UriSource = new Uri(imagePath, UriKind.Absolute);
+            bitmap.DecodePixelWidth = 165;
+            bitmap.DecodePixelHeight = 84;
             bitmap.EndInit();
 
             return bitmap;
         }
-
+        /// <summary>
+        /// Mehtod ini digunakan untuk merubah dari satuan Imperial ke Metric
+        /// </summary>
+        /// <param name="kelvin"></param>
+        /// <returns></returns>
         string kelvinToCelcius(String kelvin)
         {
 
@@ -92,34 +97,29 @@ namespace OpenweatherApps
 
             Double celcius = kelvinInt - 273.15;
 
-            return Convert.ToString(celcius);
-        }
+            string number = Convert.ToString(celcius);
+            if (number.Length >= 4)
+            {
+                number = number.Substring(0, 4);
+            }
 
-        async Task getForecast()
+            return number;
+        }
+        /// <summary>
+        /// Method ini digunakan untuk mengubah UNIX menjadi date time
+        /// </summary>
+        /// <param name="unixTime"></param>
+        /// <returns></returns>
+        public DateTime FromUnixTime(long unixTime)
         {
-            client.BaseAddress = new Uri("http://api.openweathermap.org/data/2.5/weather");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            //string kota = "Malang";
-            /* string kota = await getKota();*/
-            string kota = "Malang";
-            string key = "{YOUR API KEY}";
-            string path = "?q=" + kota + "&APPID=" + key;
-
-            try
-            {
-                //GET
-                forecast = await getForecasteKotaAsync(path);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            return epoch.AddSeconds(unixTime);
         }
-
-
-
+        /// <summary>
+        /// Method digunakan untuk mengambil dan membinding JSON dengan object forecast
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         async Task<ForecastKota> getForecasteKotaAsync(String path)
         {
             ForecastKota forecastKota = null;
@@ -130,36 +130,24 @@ namespace OpenweatherApps
             }
             return forecastKota;
         }
-        async Task getForecast(String kota)
-        {
-            client.BaseAddress = new Uri("http://api.openweathermap.org/data/2.5/weather");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            string key = "YOUR KEY";
-            string path = "?q=" + kota + "&APPID=" + key;
-
-            try
-            {
-                //GET
-                forecast = await getForecasteKotaAsync(path).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-        }
-
+        /// <summary>
+        /// Method ini digunakan untuk membuat koneksi terlebih dahulu dengan server. Catatan: Hanya perlu sekali di panggil
+        /// </summary>
+        /// <returns></returns>
         async Task getClientHTTP()
         {
             client.BaseAddress = new Uri("http://api.openweathermap.org/data/2.5/weather");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
-
-        async Task getForecast2(string kotaPar)
+        /// <summary>
+        /// //Method ini digunakan untuk mengambil JSON dari Server. Disimpan dalam object forecast
+        /// </summary>
+        /// <param name="kotaPar"></param>
+        /// <returns></returns>
+        async Task getForecast(string kotaPar)
         {
-            string key = "YOUR KEY";
+            string key = "ec467b7061db8ad1aeeade9178c34a4f";
             string path = "?q=" + kotaPar + "&APPID=" + key;
             try
             {
@@ -169,14 +157,9 @@ namespace OpenweatherApps
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-            }
+                MessageBox.Show("Terjadi kesalahan pada proses berjalannya aplikasi ini.\nUntuk info lebih lanjut silahkan mencari GALAT: " + e, "Error", MessageBoxButton.OK);
 
-        }
-        private async Task<string> getTextKota2(String kota)
-        {
-            await getForecast2(kota).ConfigureAwait(false);
-            return "id " + forecast.id.ToString() + "\n name : " + forecast.name.ToString()
-       + "\n cod : " + forecast.cod.ToString() + "\ntemp: " + kelvinToCelcius(forecast.main.temp);
+            }
 
         }
     }

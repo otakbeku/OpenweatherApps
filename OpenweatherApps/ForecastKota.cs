@@ -12,6 +12,10 @@ namespace OpenweatherApps
         public string id { get; set; }
         public string cod { get; set; }
 
+        public string dt { get; set; }
+
+        public SysSun sys { get; set; }
+
         public TempHumid main { get; set; }
 
         public List<CuacaKota> weather { get; set; }
