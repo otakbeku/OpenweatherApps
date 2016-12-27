@@ -27,8 +27,6 @@ namespace OpenweatherApps
         HttpClient client;
         ForecastKota forecast;
         string kota;
-
-
         public MainWindow()
         {
             client = new HttpClient();
@@ -102,7 +100,6 @@ namespace OpenweatherApps
             {
                 number = number.Substring(0, 4);
             }
-
             return number;
         }
         /// <summary>
@@ -158,10 +155,7 @@ namespace OpenweatherApps
             {
                 Console.WriteLine(e.Message);
                 MessageBox.Show("Terjadi kesalahan pada proses berjalannya aplikasi ini.\nUntuk info lebih lanjut silahkan mencari GALAT: " + e, "Error", MessageBoxButton.OK);
-
             }
-
         }
     }
-
 }
